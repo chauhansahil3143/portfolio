@@ -61,12 +61,31 @@ export default function Navbar() {
 
       <nav ref={navRef} className="navbar" role="navigation" aria-label="Main navigation">
         <div className="container navbar__inner">
-          <a href="#hero" className="navbar__logo" aria-label="Home">
-            {personalInfo.firstName.toUpperCase()}<span>.</span>{personalInfo.lastName.toUpperCase()}
-          </a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <button 
+              onClick={toggleTheme}
+              aria-label="Toggle Theme"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--c-border)',
+                color: 'var(--c-text)',
+                padding: '0.4rem 0.8rem',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.8rem',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              {isLightMode ? 'DARK' : 'LIGHT'}
+            </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <ul className="navbar__links" role="list">
+            <a href="#hero" className="navbar__logo" aria-label="Home">
+              {personalInfo.firstName.toUpperCase()}<span>.</span>{personalInfo.lastName.toUpperCase()}
+            </a>
+          </div>
+
+          <ul className="navbar__links" role="list">
             {[
               { label: '// about',    id: 'about'    },
               { label: '// projects', id: 'projects' },
@@ -85,27 +104,6 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <button 
-            onClick={toggleTheme}
-            aria-label="Toggle Theme"
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--c-border)',
-              color: 'var(--c-text)',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.8rem',
-              marginLeft: '1rem',
-              transition: 'all 0.3s ease',
-              width: '70px',
-              textAlign: 'center'
-            }}
-          >
-            {isLightMode ? 'DARK' : 'LIGHT'}
-            </button>
-          </div>
         </div>
       </nav>
     </>
