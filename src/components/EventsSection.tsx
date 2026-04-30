@@ -20,7 +20,7 @@ export default function EventsSection() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' },
+      { threshold: 0.1, rootMargin: '0px 0px -25% 0px' },
     );
 
     el.querySelectorAll('.fade-in-up, .slide-in-left, .slide-in-right').forEach((node) => observer.observe(node));

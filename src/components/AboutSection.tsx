@@ -21,7 +21,7 @@ export default function AboutSection() {
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.1, rootMargin: '0px 0px -25% 0px' },
     );
 
     el.querySelectorAll('.fade-in-up').forEach((node) => observer.observe(node));
