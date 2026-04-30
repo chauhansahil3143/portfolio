@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { personalInfo } from '@/config/data';
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [showAvatar, setShowAvatar] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -18,23 +18,79 @@ export default function ContactSection() {
       },
       { threshold: 0.2 },
     );
-
     el.querySelectorAll('.fade-in-up').forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, []);
 
+  // Auto-hide avatar after 4 seconds
+  useEffect(() => {
+    if (!showAvatar) return;
+    const timer = setTimeout(() => setShowAvatar(false), 4000);
+    return () => clearTimeout(timer);
+  }, [showAvatar]);
+
   return (
     <section className="contact section" id="contact" ref={sectionRef} aria-label="Contact">
-      {/* Background orbs */}
       <div
         className="glow-orb"
         style={{ width: 400, height: 400, bottom: '-10%', left: '50%', transform: 'translateX(-50%)', background: 'rgba(124,92,255,0.06)' }}
         aria-hidden="true"
       />
 
+      {/* Astronaut Avatar Popup */}
+      {showAvatar && (
+        <div className="avatar-popup" role="dialog" aria-label="Avatar greeting">
+          <div className="avatar-bubble">
+            <span>Hey there! 👋</span>
+            <br />
+            <span style={{ fontSize: '0.8rem', color: 'var(--c-muted)' }}>I&apos;m Sahil — let&apos;s connect!</span>
+          </div>
+
+          <div className="avatar-figure">
+            <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" className="avatar-svg">
+              {/* Helmet */}
+              <circle cx="60" cy="48" r="32" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="2.5"/>
+              {/* Visor */}
+              <ellipse cx="60" cy="50" rx="20" ry="18" fill="#63d2ff" opacity="0.2"/>
+              <ellipse cx="60" cy="50" rx="20" ry="18" fill="none" stroke="#63d2ff" strokeWidth="1.5"/>
+              {/* Eyes */}
+              <circle cx="53" cy="46" r="3.5" fill="#7c5cff"/>
+              <circle cx="67" cy="46" r="3.5" fill="#7c5cff"/>
+              {/* Smile */}
+              <path d="M53 57 Q60 63 67 57" stroke="#7c5cff" strokeWidth="2" fill="none" strokeLinecap="round"/>
+              {/* Shine */}
+              <ellipse cx="50" cy="38" rx="6" ry="3" fill="white" opacity="0.15" transform="rotate(-20 50 38)"/>
+              {/* Body */}
+              <rect x="32" y="76" width="56" height="52" rx="18" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="2"/>
+              {/* Chest badge */}
+              <rect x="44" y="90" width="32" height="16" rx="4" fill="#7c5cff" opacity="0.3"/>
+              <text x="60" y="102" textAnchor="middle" fill="#63d2ff" fontSize="6.5" fontFamily="monospace">Sahil</text>
+              {/* Left arm - waving */}
+              <rect x="14" y="76" width="20" height="36" rx="10" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="1.5" className="avatar-arm-wave"/>
+              {/* Right arm */}
+              <rect x="86" y="80" width="20" height="36" rx="10" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="1.5"/>
+              {/* Gloves */}
+              <circle cx="24" cy="112" r="8" fill="#7c5cff" opacity="0.7" className="avatar-arm-wave"/>
+              <circle cx="96" cy="118" r="8" fill="#7c5cff" opacity="0.7"/>
+              {/* Legs */}
+              <rect x="38" y="124" width="18" height="28" rx="9" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="1.5"/>
+              <rect x="64" y="124" width="18" height="28" rx="9" fill="#1a1f3c" stroke="#7c5cff" strokeWidth="1.5"/>
+              {/* Boots */}
+              <ellipse cx="47" cy="153" rx="12" ry="6" fill="#7c5cff" opacity="0.8"/>
+              <ellipse cx="73" cy="153" rx="12" ry="6" fill="#7c5cff" opacity="0.8"/>
+            </svg>
+          </div>
+
+          <button
+            className="avatar-close"
+            onClick={() => setShowAvatar(false)}
+            aria-label="Close avatar"
+          >✕</button>
+        </div>
+      )}
+
       <div className="container">
         <div className="glass-card contact__card fade-in-up">
-          {/* Top accent */}
           <div
             style={{
               position: 'absolute',
@@ -64,16 +120,15 @@ export default function ContactSection() {
             {personalInfo.email}
           </a>
 
-          <a
-            href={`mailto:${personalInfo.email}`}
+          <button
             id="contact-cta-btn"
             className="btn btn-primary"
-            aria-label="Say hello via email"
+            aria-label="Say hello"
+            onClick={() => setShowAvatar(true)}
           >
             <span>Say Hello 👋</span>
-          </a>
+          </button>
 
-          {/* Socials */}
           <div className="contact__socials" role="list" aria-label="Social links">
             {[
               {
