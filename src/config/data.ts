@@ -109,7 +109,7 @@ export const projectsData = [
     tags: ['Web Development', 'Python', 'Frontend'],
     github: 'https://github.com/chauhansahil3143/student-aid-search',
     demo: 'https://bvmfind.web.app/',
-    youtube: 'https://www.youtube.com/shorts/xoOApReCWaY',
+    youtube: 'https://youtu.be/O5inlsb3LM0?si=7_Bpck4BthRIsfQ4',
     accent: '#7c5cff',
   },
   {
