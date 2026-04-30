@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { eventsData } from '@/config/data';
-import Image from 'next/image';
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -65,11 +64,8 @@ export default function EventsSection() {
                       boxShadow: activeEvent === evt.id ? `0 0 25px ${evt.color}aa` : 'none' 
                     }}
                   >
-                    {'image' in evt ? (
-                      <img src={evt.image as string} alt={evt.title} className="timeline-node-img" />
-                    ) : (
-                      <span className="timeline-fallback-icon">{evt.icon}</span>
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={evt.image} alt={evt.title} className="timeline-node-img" />
                   </div>
                   
                   {/* The text content that sits on the side */}
