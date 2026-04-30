@@ -41,7 +41,7 @@ export const aboutTerminalData = {
 
 export const aboutQuickFacts = [
   { icon: '🎓', label: 'BVM Anand', sub: 'CE Student' },
-  { icon: '📚', label: '2nd Year', sub: 'Undergrad' },
+  { icon: '📚', label: '2nd Year', sub: 'Undergraduate' },
   { icon: '💻', label: 'Learning', sub: 'Web Dev & DSA' },
 ];
 
@@ -109,7 +109,7 @@ export const projectsData = [
     tags: ['Web Development', 'Python', 'Frontend'],
     github: 'https://github.com/chauhansahil3143/student-aid-search',
     demo: 'https://bvmfind.web.app/',
-    youtube: 'https://youtu.be/O5inlsb3LM0?si=SDZftv-RGr1srQYV',
+    youtube: 'https://www.youtube.com/shorts/xoOApReCWaY',
     accent: '#7c5cff',
   },
   {
