@@ -9,6 +9,7 @@ interface Hexagon {
   cy: number;
   opacity: number;
   color: string;
+  icon: string;
 }
 
 export default function ZeroGCanvas() {
@@ -27,6 +28,7 @@ export default function ZeroGCanvas() {
     const hexWidth = Math.sqrt(3) * r;
     const hexHeight = 2 * r;
     const colors = ['99, 210, 255', '124, 92, 255', '0, 255, 200'];
+    const icons = ['{', '}', '</>', '0', '1', 'λ', '[]', '#', '()', '&&', '||'];
 
     let hexagons: Hexagon[] = [];
 
@@ -52,7 +54,8 @@ export default function ZeroGCanvas() {
             cx,
             cy,
             opacity: 0.02, // Base extremely dim opacity
-            color: colors[Math.floor(Math.random() * colors.length)]
+            color: colors[Math.floor(Math.random() * colors.length)],
+            icon: icons[Math.floor(Math.random() * icons.length)]
           });
         }
       }
@@ -94,7 +97,7 @@ export default function ZeroGCanvas() {
         
         // If mouse is near, light up the hexagon instantly
         if (dist < hexWidth * 2.5) {
-          hex.opacity = 0.5 - (dist / (hexWidth * 2.5)) * 0.3; // Glow depends on distance
+          hex.opacity = 0.6 - (dist / (hexWidth * 2.5)) * 0.4; // Stronger Glow
         } else {
           // Slowly fade out back to base opacity
           if (hex.opacity > 0.02) {
@@ -102,22 +105,30 @@ export default function ZeroGCanvas() {
           }
         }
 
-        // Randomly pulse some hexagons
-        if (Math.random() < 0.0001 && hex.opacity <= 0.03) {
-          hex.opacity = 0.3;
+        // Randomly pulse some hexagons (increased frequency)
+        if (Math.random() < 0.0015 && hex.opacity <= 0.03) {
+          hex.opacity = 0.4; // Brighter pulse
         }
 
         // Draw hexagon fill
         if (hex.opacity > 0) {
           drawHexagon(hex.cx, hex.cy, r - 1); // r-1 creates a natural gap between hexes
-          ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity})`;
+          ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 0.5})`; // Subtle fill
           ctx.fill();
           
-          // Only draw borders for ones that are glowing to keep it clean
+          // Only draw borders and icons for ones that are glowing to keep it clean
           if (hex.opacity > 0.05) {
-            ctx.lineWidth = 1;
+            // Glowing border
+            ctx.lineWidth = 1.5;
             ctx.strokeStyle = `rgba(${hex.color}, ${hex.opacity * 1.5})`;
             ctx.stroke();
+
+            // Draw icon inside
+            ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 2.5})`;
+            ctx.font = `600 ${r * 0.6}px var(--font-mono)`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(hex.icon, hex.cx, hex.cy);
           }
         }
       }
