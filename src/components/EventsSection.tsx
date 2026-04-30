@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { eventsData } from '@/config/data';
+import Image from 'next/image';
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -22,7 +23,7 @@ export default function EventsSection() {
       { threshold: 0.1, rootMargin: '0px 0px -60px 0px' },
     );
 
-    el.querySelectorAll('.fade-in-up').forEach((node) => observer.observe(node));
+    el.querySelectorAll('.fade-in-up, .slide-in-left, .slide-in-right').forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, []);
 
@@ -35,50 +36,56 @@ export default function EventsSection() {
             <span className="gradient-text">Events</span> Attended
           </h2>
           <p className="projects__sub" style={{ textAlign: 'center' }}>
-            A timeline of hackathons, workshops, and tech symposiums I've participated in.
+            A winding path of hackathons, workshops, and tech symposiums I've participated in.
           </p>
         </header>
 
-        <div className="timeline-container fade-in-up" style={{ transitionDelay: '100ms' }}>
-          {/* Horizontal line */}
-          <div className="timeline-track" aria-hidden="true" />
+        <div className="timeline-wave-container">
+          <div className="timeline-wave-track" aria-hidden="true" />
           
-          <div className="timeline-nodes" role="list">
-            {eventsData.map((evt, i) => (
-              <div 
-                key={evt.id}
-                className={`timeline-node ${activeEvent === evt.id ? 'active' : ''}`}
-                role="listitem"
-                onMouseEnter={() => setActiveEvent(evt.id)}
-                onMouseLeave={() => setActiveEvent(null)}
-                // Also support touch devices
-                onClick={() => setActiveEvent(activeEvent === evt.id ? null : evt.id)}
-                style={{ animationDelay: `${i * 150}ms` }}
-              >
-                {/* Node icon / dot */}
+          <div className="timeline-wave-nodes" role="list">
+            {eventsData.map((evt, i) => {
+              const isLeft = i % 2 === 0;
+              return (
                 <div 
-                  className="timeline-icon" 
-                  style={{ borderColor: evt.color, boxShadow: activeEvent === evt.id ? `0 0 20px ${evt.color}80` : 'none' }}
+                  key={evt.id}
+                  className={`timeline-wave-node ${isLeft ? 'node-left slide-in-left' : 'node-right slide-in-right'} ${activeEvent === evt.id ? 'active' : ''}`}
+                  role="listitem"
+                  onMouseEnter={() => setActiveEvent(evt.id)}
+                  onMouseLeave={() => setActiveEvent(null)}
+                  onClick={() => setActiveEvent(activeEvent === evt.id ? null : evt.id)}
+                  style={{ animationDelay: `${i * 150}ms` }}
                 >
-                  {evt.icon}
-                </div>
-                
-                {/* Label below node */}
-                <div className="timeline-label">
-                  <div className="timeline-date">{evt.date}</div>
-                  <div className="timeline-title">{evt.title}</div>
-                </div>
-
-                {/* Hover Popup Description */}
-                <div className="timeline-popup">
-                  <div className="timeline-popup-inner" style={{ borderTop: `2px solid ${evt.color}` }}>
-                    <h4>{evt.title}</h4>
-                    <span className="timeline-popup-date">{evt.date}</span>
-                    <p>{evt.description}</p>
+                  
+                  {/* The circular image node */}
+                  <div 
+                    className="timeline-wave-icon" 
+                    style={{ 
+                      borderColor: evt.color, 
+                      boxShadow: activeEvent === evt.id ? `0 0 25px ${evt.color}aa` : 'none' 
+                    }}
+                  >
+                    {'image' in evt ? (
+                      <img src={evt.image as string} alt={evt.title} className="timeline-node-img" />
+                    ) : (
+                      <span className="timeline-fallback-icon">{evt.icon}</span>
+                    )}
                   </div>
+                  
+                  {/* The text content that sits on the side */}
+                  <div className="timeline-wave-content">
+                    <div className="timeline-wave-date" style={{ color: evt.color }}>{evt.date}</div>
+                    <div className="timeline-wave-title">{evt.title}</div>
+                    
+                    {/* Expandable description on hover */}
+                    <div className="timeline-wave-desc">
+                      <p>{evt.description}</p>
+                    </div>
+                  </div>
+
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

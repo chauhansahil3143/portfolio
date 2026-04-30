@@ -52,6 +52,7 @@ export default function Navbar() {
               { label: '// about',    id: 'about'    },
               { label: '// projects', id: 'projects' },
               { label: '// skills',   id: 'skills'   },
+              { label: '// events',   id: 'events'   },
               { label: '// contact',  id: 'contact'  },
             ].map(({ label, id }) => (
               <li key={id}>

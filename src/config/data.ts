@@ -131,7 +131,7 @@ export const eventsData = [
     title: 'Hackathon 2023',
     date: 'Oct 15, 2023',
     description: 'Participated in a 48-hour hackathon building an AI-powered study companion. Won 2nd place in the student category.',
-    icon: '🏆',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80',
     color: '#ff6b6b'
   },
   {
@@ -139,7 +139,7 @@ export const eventsData = [
     title: 'Web Dev Workshop',
     date: 'Jan 20, 2024',
     description: 'Attended a hands-on workshop covering modern frontend frameworks, Next.js, and advanced CSS layout techniques.',
-    icon: '💻',
+    image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=400&q=80',
     color: '#a78bfa'
   },
   {
@@ -147,7 +147,7 @@ export const eventsData = [
     title: 'Tech Symposium',
     date: 'Mar 10, 2024',
     description: 'Tech Symposium where industry leaders discussed the future of AI, web3, and cloud computing. Networked with senior engineers.',
-    icon: '🎙️',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=400&q=80',
     color: '#00ffc8'
   },
   {
@@ -155,7 +155,7 @@ export const eventsData = [
     title: 'Open Source Sprint',
     date: 'May 05, 2024',
     description: 'Contributed to open source projects during a weekend sprint. Submitted multiple PRs fixing bugs and improving documentation.',
-    icon: '🚀',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80',
     color: '#63d2ff'
   }
 ];
