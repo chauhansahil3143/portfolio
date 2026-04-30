@@ -94,9 +94,9 @@ export default function ZeroGCanvas() {
         // Check distance to mouse
         const dist = Math.hypot(hex.cx - mouse.x, hex.cy - mouse.y);
         
-        // If mouse is near, light up the hexagon instantly
+        // If mouse is near, softly light up the hexagon
         if (dist < hexWidth * 2.5) {
-          hex.opacity = 0.6 - (dist / (hexWidth * 2.5)) * 0.4; // Stronger Glow
+          hex.opacity = 0.2 - (dist / (hexWidth * 2.5)) * 0.18; // Soft max glow of 0.2
         } else {
           // Slowly fade out back to base opacity
           if (hex.opacity > 0.02) {
@@ -104,27 +104,22 @@ export default function ZeroGCanvas() {
           }
         }
 
-        // Randomly pulse some hexagons (increased frequency)
-        if (Math.random() < 0.0015 && hex.opacity <= 0.03) {
-          hex.opacity = 0.4; // Brighter pulse
-        }
-
         // Draw hexagon fill
         if (hex.opacity > 0) {
           drawHexagon(hex.cx, hex.cy, r - 1); // r-1 creates a natural gap between hexes
-          ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 0.5})`; // Subtle fill
+          ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 0.3})`; // Very subtle fill
           ctx.fill();
           
-          // Only draw borders and icons for ones that are glowing to keep it clean
-          if (hex.opacity > 0.05) {
-            // Glowing border
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = `rgba(${hex.color}, ${hex.opacity * 1.5})`;
+          // Only draw borders and icons for ones that are actively hovered
+          if (hex.opacity > 0.03) {
+            // Soft border
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(${hex.color}, ${hex.opacity * 1.2})`;
             ctx.stroke();
 
             // Draw icon inside
-            ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 2.5})`;
-            ctx.font = `600 ${r * 0.6}px var(--font-mono)`;
+            ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 2.0})`;
+            ctx.font = `500 ${r * 0.55}px var(--font-mono)`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(hex.icon, hex.cx, hex.cy);

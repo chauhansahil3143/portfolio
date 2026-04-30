@@ -65,7 +65,8 @@ export default function Navbar() {
             {personalInfo.firstName.toUpperCase()}<span>.</span>{personalInfo.lastName.toUpperCase()}
           </a>
 
-          <ul className="navbar__links" role="list">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <ul className="navbar__links" role="list">
             {[
               { label: '// about',    id: 'about'    },
               { label: '// projects', id: 'projects' },
@@ -101,7 +102,8 @@ export default function Navbar() {
             }}
           >
             {isLightMode ? 'DARK' : 'LIGHT'}
-          </button>
+            </button>
+          </div>
         </div>
       </nav>
     </>
