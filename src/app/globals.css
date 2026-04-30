@@ -550,6 +550,7 @@ main {
   background: linear-gradient(135deg, rgba(124, 92, 255, 0.04) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.4s;
+  pointer-events: none;
 }
 
 .project-card:hover {
