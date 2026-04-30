@@ -20,7 +20,7 @@ export const personalInfo = {
   aboutHeadingHighlight: "technology & logic.", // Colored bottom part of the About heading
   aboutBio1: "I am a Computer Engineering undergraduate at Birla Vishvakarma Mahavidyalaya (BVM), Anand. I have a strong passion for problem-solving and building useful applications.",
   aboutBio2: "Currently in my 2nd year, I am dedicating my time to mastering Web Development, practicing Data Structures and Algorithms (DSA) to hone my logical skills, and exploring Python. I love bringing ideas to life through code.",
-  profileImage: "/profile.png", // Profile image from the public folder
+  profileImage: "/profile1.png", // Profile image from the public folder
   github: "https://github.com/chauhansahil3143/", // Add your GitHub profile link
   linkedin: "https://www.linkedin.com/in/sahil-chauhan3143/", // Add your LinkedIn profile link
   twitter: "https://twitter.com", // Add your Twitter/X profile link
