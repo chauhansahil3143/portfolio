@@ -19,15 +19,20 @@ const nextConfig = {
   },
   headers: async () => [
     {
+      // Static assets: cache forever (they have content hashes)
+      source: '/_next/static/(.*)',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+      ],
+    },
+    {
+      // Everything else (HTML pages): always revalidate so page loads fresh
       source: '/(.*)',
       headers: [
         { key: 'X-Content-Type-Options', value: 'nosniff' },
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'X-XSS-Protection', value: '1; mode=block' },
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
+        { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
       ],
     },
   ],
