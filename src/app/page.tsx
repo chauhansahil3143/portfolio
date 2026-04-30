@@ -13,9 +13,18 @@ const ZeroGCanvas = dynamic(() => import('@/components/ZeroGCanvas'), {
   loading: () => null,
 });
 
+// Lazy-load custom cursor — client only
+const CustomCursor = dynamic(() => import('@/components/CustomCursor'), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function HomePage() {
   return (
     <>
+      {/* Custom magnetic cursor */}
+      <CustomCursor />
+
       {/* Three.js Zero-G background */}
       <ZeroGCanvas />
 
