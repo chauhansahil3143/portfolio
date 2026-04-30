@@ -120,6 +120,17 @@ export default function ContactSection() {
             {personalInfo.email}
           </a>
 
+          {'phone' in personalInfo && personalInfo.phone && (
+            <a
+              href={`tel:${personalInfo.phone}`}
+              className="contact__email"
+              style={{ fontSize: '1rem', marginTop: '-12px', opacity: 0.8 }}
+              aria-label={`Call ${personalInfo.phone}`}
+            >
+              📞 {personalInfo.phone}
+            </a>
+          )}
+
           <button
             id="contact-cta-btn"
             className="btn btn-primary"
@@ -128,6 +139,7 @@ export default function ContactSection() {
           >
             <span>Say Hello 👋</span>
           </button>
+
 
           <div className="contact__socials" role="list" aria-label="Social links">
             {[

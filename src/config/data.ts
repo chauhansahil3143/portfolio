@@ -11,7 +11,8 @@ export const personalInfo = {
   role: "Computer Engineering Student",
   college: "BVM Anand",
   year: "2nd Year",
-  email: "sahil@example.com", // Replace with your actual email address
+  email: "sahilchauhansmc@gmail.com", // Replace with your actual email address
+  phone: "+91 90235 25208",
   heroHeadingPrefix: "Engineering", // Top part of the main heading
   heroHeadingHighlight: "in Zero-G.", // Colored bottom part of the main heading
   heroSubtitle: "I'm a 2nd-year Computer Engineering student at BVM Anand. I am passionate about technology and currently focusing on Web Development, Data Structures and Algorithms (DSA), and Python.",
@@ -19,9 +20,9 @@ export const personalInfo = {
   aboutHeadingHighlight: "technology & logic.", // Colored bottom part of the About heading
   aboutBio1: "I am a Computer Engineering undergraduate at Birla Vishvakarma Mahavidyalaya (BVM), Anand. I have a strong passion for problem-solving and building useful applications.",
   aboutBio2: "Currently in my 2nd year, I am dedicating my time to mastering Web Development, practicing Data Structures and Algorithms (DSA) to hone my logical skills, and exploring Python. I love bringing ideas to life through code.",
-  profileImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800", // You can paste any direct image link here!
-  github: "https://github.com", // Add your GitHub profile link
-  linkedin: "https://linkedin.com", // Add your LinkedIn profile link
+  profileImage: "/profile.png", // Profile image from the public folder
+  github: "https://github.com/chauhansahil3143/", // Add your GitHub profile link
+  linkedin: "https://www.linkedin.com/in/sahil-chauhan3143/", // Add your LinkedIn profile link
   twitter: "https://twitter.com", // Add your Twitter/X profile link
 };
 
@@ -106,8 +107,9 @@ export const projectsData = [
     title: 'Campus Found',
     description: 'A platform designed for college students to easily report and find lost items on campus. Built to help the community recover lost belongings quickly.',
     tags: ['Web Development', 'Python', 'Frontend'],
-    github: 'https://github.com', // Link your GitHub repo here
-    demo: null, // Add a live link here if deployed
+    github: 'https://github.com/chauhansahil3143/student-aid-search', // Link your GitHub repo here
+    demo: 'https://bvmfind.web.app/', // Add a live link here if deployed
+    youtube: 'https://youtu.be/O5inlsb3LM0?si=SDZftv-RGr1srQYV',
     accent: '#7c5cff',
   },
   {
