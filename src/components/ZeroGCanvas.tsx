@@ -17,6 +17,9 @@ export default function ZeroGCanvas() {
     const mount = mountRef.current;
     if (!mount) return;
 
+    const isMobile = window.innerWidth < 768;
+    const CURRENT_PARTICLE_COUNT = isMobile ? 60 : 150; // Massively reduce CPU load on phones
+    
     /* ── Scene & Camera ───────────────────────────────── */
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x02040a, 0.035);
@@ -26,25 +29,26 @@ export default function ZeroGCanvas() {
 
     /* ── Renderer ─────────────────────────────────────── */
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isMobile, // disable antialias on mobile for performance
       alpha: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    // Force max DPR of 1 on mobile to prevent GPU lag
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
     mount.appendChild(renderer.domElement);
 
     /* ── Particles & Lines (Neural Plexus Effect) ──────── */
     const particlesData: { velocity: THREE.Vector3 }[] = [];
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const colors = new Float32Array(PARTICLE_COUNT * 3);
+    const positions = new Float32Array(CURRENT_PARTICLE_COUNT * 3);
+    const colors = new Float32Array(CURRENT_PARTICLE_COUNT * 3);
 
     const color1 = new THREE.Color(0x63d2ff); // Glow Blue
     const color2 = new THREE.Color(0x7c5cff); // Accent Purple
     const color3 = new THREE.Color(0x00ffc8); // Pulse Green
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < CURRENT_PARTICLE_COUNT; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 30;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
@@ -86,7 +90,7 @@ export default function ZeroGCanvas() {
 
     // Lines linking the particles together
     const linesGeometry = new THREE.BufferGeometry();
-    const maxLines = PARTICLE_COUNT * PARTICLE_COUNT;
+    const maxLines = CURRENT_PARTICLE_COUNT * CURRENT_PARTICLE_COUNT;
     const linesPositions = new Float32Array(maxLines * 3);
     const linesColors = new Float32Array(maxLines * 3);
 
@@ -131,7 +135,7 @@ export default function ZeroGCanvas() {
       const colArr = pGeometry.attributes.color.array as Float32Array;
       const mouse3D = mouse3DRef.current;
 
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < CURRENT_PARTICLE_COUNT; i++) {
         const particleData = particlesData[i];
         
         // Move particles
@@ -156,7 +160,7 @@ export default function ZeroGCanvas() {
         }
 
         // Draw connecting lines if particles are close enough
-        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+        for (let j = i + 1; j < CURRENT_PARTICLE_COUNT; j++) {
           const dx = posArr[i * 3] - posArr[j * 3];
           const dy = posArr[i * 3 + 1] - posArr[j * 3 + 1];
           const dz = posArr[i * 3 + 2] - posArr[j * 3 + 2];

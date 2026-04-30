@@ -29,7 +29,7 @@
 
   /* Spacing */
   --max-w: 1200px;
-  --section-py: clamp(120px, 18vw, 240px);
+  --section-py: clamp(80px, 10vw, 150px);
 
   /* Typography */
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
