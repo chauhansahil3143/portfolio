@@ -1,115 +1,134 @@
 'use client';
 
-import { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
-import * as THREE from 'three';
-
-// ── The Digital Ocean Component ──
-function CyberOcean({ isMobile }: { isMobile: boolean }) {
-  const ref1 = useRef<THREE.Points>(null!);
-  const ref2 = useRef<THREE.Points>(null!);
-  
-  const count = isMobile ? 1200 : 4000;
-
-  // Generate random X/Z grid positions once
-  const [pos1, pos2] = useMemo(() => {
-    const p1 = new Float32Array(count * 3);
-    const p2 = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 50;
-      const z = (Math.random() - 0.5) * 50;
-      
-      p1[i * 3] = x;
-      p1[i * 3 + 1] = 0;
-      p1[i * 3 + 2] = z;
-
-      p2[i * 3] = x;
-      p2[i * 3 + 1] = 0;
-      p2[i * 3 + 2] = z;
-    }
-    return [p1, p2];
-  }, [count]);
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-
-    // Smooth mouse parallax
-    const mouseX = (state.mouse.x * window.innerWidth) / 100;
-    const mouseY = (state.mouse.y * window.innerHeight) / 100;
-    
-    state.camera.position.x += (mouseX * 0.5 - state.camera.position.x) * 0.05;
-    state.camera.position.y += ((6 - mouseY * 0.5) - state.camera.position.y) * 0.05;
-    state.camera.lookAt(0, 0, 0);
-
-    // Animate Layer 1 (Cyan Waves)
-    const arr1 = ref1.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < count; i++) {
-      const x = arr1[i * 3];
-      const z = arr1[i * 3 + 2];
-      // Wave math
-      arr1[i * 3 + 1] = Math.sin(x / 3 + t * 0.5) * Math.cos(z / 3 + t * 0.4) * 1.5;
-    }
-    ref1.current.geometry.attributes.position.needsUpdate = true;
-    ref1.current.rotation.y = t * 0.02;
-
-    // Animate Layer 2 (Purple Waves - inverted and floating higher)
-    const arr2 = ref2.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < count; i++) {
-      const x = arr2[i * 3];
-      const z = arr2[i * 3 + 2];
-      arr2[i * 3 + 1] = Math.sin(x / 4 - t * 0.6) * Math.cos(z / 4 - t * 0.5) * 2.0 + 1.0;
-    }
-    ref2.current.geometry.attributes.position.needsUpdate = true;
-    ref2.current.rotation.y = -t * 0.015;
-  });
-
-  return (
-    <group>
-      {/* Cyan Layer */}
-      <Points ref={ref1} positions={pos1} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#00ffc8" size={isMobile ? 0.08 : 0.05} sizeAttenuation={true} depthWrite={false} blending={THREE.AdditiveBlending} opacity={0.6} />
-      </Points>
-      
-      {/* Purple Layer */}
-      <Points ref={ref2} positions={pos2} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#7c5cff" size={isMobile ? 0.08 : 0.06} sizeAttenuation={true} depthWrite={false} blending={THREE.AdditiveBlending} opacity={0.8} />
-      </Points>
-    </group>
-  );
-}
+import { useEffect, useRef } from 'react';
 
 export default function ZeroGCanvas() {
-  const [isMobile, setIsMobile] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    
+    // The characters to display in the data streams (Code, Binary, Web Dev symbols)
+    const characters = '01{}<>;=[]+-*/'.split('');
+    const fontSize = 16;
+    let columns = Math.floor(width / fontSize);
+    
+    // Array to track the Y position of each column
+    let drops: number[] = [];
+    
+    const initDrops = () => {
+      columns = Math.floor(width / fontSize);
+      drops = [];
+      for (let i = 0; i < columns; i++) {
+        // Randomize initial vertical positions so they don't all start at the exact top
+        drops[i] = Math.random() * -100;
+      }
+    };
+    initDrops();
+
+    const setSize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      initDrops(); // Re-initialize streams on resize
+    };
+    setSize();
+    window.addEventListener('resize', setSize);
+
+    // Mouse interaction: push characters away from mouse
+    let mouse = { x: -1000, y: -1000 };
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+
+    let animationId: number;
+    let frameCount = 0;
+
+    const animate = () => {
+      // Create the fading trail effect by drawing a semi-transparent black rectangle
+      ctx.fillStyle = 'rgba(2, 4, 10, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.font = `${fontSize}px var(--font-mono)`;
+      ctx.textAlign = 'center';
+
+      for (let i = 0; i < drops.length; i++) {
+        // Don't draw if the drop hasn't entered the screen yet
+        if (drops[i] * fontSize < 0) {
+          drops[i]++;
+          continue;
+        }
+
+        const text = characters[Math.floor(Math.random() * characters.length)];
+        const x = i * fontSize + fontSize / 2;
+        let y = drops[i] * fontSize;
+
+        // Interaction: If a drop is near the mouse, subtly deflect it
+        const dist = Math.hypot(x - mouse.x, y - mouse.y);
+        let drawX = x;
+        if (dist < 100) {
+          const push = (100 - dist) / 10;
+          drawX += (x > mouse.x ? push : -push);
+        }
+
+        // Color logic: Alternate between Cyan and Purple streams
+        const isPurpleStream = i % 3 === 0;
+        
+        // The "head" of the stream is bright white/glow, the tail is colored
+        if (Math.random() > 0.95) {
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = isPurpleStream ? '#7c5cff' : '#63d2ff';
+        } else {
+          ctx.fillStyle = isPurpleStream ? 'rgba(124, 92, 255, 0.8)' : 'rgba(99, 210, 255, 0.8)';
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.fillText(text, drawX, y);
+
+        // Reset the drop to the top randomly to create staggered endless streams
+        if (y > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        // Move the drop down
+        drops[i]++;
+      }
+
+      // Throttle the frame rate slightly so the code doesn't fall *too* fast
+      setTimeout(() => {
+        animationId = requestAnimationFrame(animate);
+      }, 35);
+    };
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', setSize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationId);
+    };
   }, []);
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
       style={{
         position: 'fixed',
         inset: 0,
         zIndex: 0,
         pointerEvents: 'none',
-        // Dark cosmic gradient background
-        background: 'radial-gradient(circle at center, #0a0f1d 0%, #02040a 100%)',
+        background: '#02040a',
       }}
       aria-hidden="true"
-    >
-      <Canvas 
-        camera={{ position: [0, 6, 15], fov: 60 }}
-        dpr={isMobile ? 1 : [1, 1.5]}
-        gl={{ powerPreference: 'high-performance', antialias: false }}
-      >
-        {/* Soft fog to fade out the edges into the background color */}
-        <fog attach="fog" args={['#02040a', 10, 35]} />
-        <CyberOcean isMobile={isMobile} />
-      </Canvas>
-    </div>
+    />
   );
 }
