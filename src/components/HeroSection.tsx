@@ -1,16 +1,27 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { personalInfo, heroStats } from '@/config/data';
+
+// Sentences that will be typed and deleted in a loop
+const TYPED_SENTENCES = [
+  'Web Developer 🌐',
+  'DSA Enthusiast 🧠',
+  'Python Programmer 🐍',
+  'Problem Solver 💡',
+  'CS Undergrad @ BVM 🎓',
+];
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
+  const [displayText, setDisplayText] = useState('');
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
+  // Staggered entrance animation
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-
-    // Staggered fade-in for hero children
     const items = el.querySelectorAll<HTMLElement>('[data-hero-item]');
     items.forEach((item, i) => {
       item.style.opacity = '0';
@@ -24,6 +35,36 @@ export default function HeroSection() {
       });
     });
   }, []);
+
+  // Typewriter effect
+  useEffect(() => {
+    const current = TYPED_SENTENCES[sentenceIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting) {
+      // Typing
+      if (displayText.length < current.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(current.slice(0, displayText.length + 1));
+        }, 80);
+      } else {
+        // Pause before deleting
+        timeout = setTimeout(() => setIsDeleting(true), 1800);
+      }
+    } else {
+      // Deleting
+      if (displayText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(current.slice(0, displayText.length - 1));
+        }, 40);
+      } else {
+        setIsDeleting(false);
+        setSentenceIndex((prev) => (prev + 1) % TYPED_SENTENCES.length);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, sentenceIndex]);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -56,9 +97,15 @@ export default function HeroSection() {
           <span className="line-accent gradient-text">{personalInfo.heroHeadingHighlight}</span>
         </h1>
 
+        {/* Typewriter line */}
+        <div data-hero-item className="hero__typewriter" aria-live="polite" aria-label="Typing animation">
+          <span className="typewriter__text">{displayText}</span>
+          <span className="typewriter__cursor" aria-hidden="true">|</span>
+        </div>
+
         {/* Subtitle */}
         <p data-hero-item className="hero__subtitle">
-          I&apos;m <strong style={{ color: 'var(--c-white)' }}>{personalInfo.name}</strong>, a {personalInfo.role} at {personalInfo.college}. {personalInfo.heroSubtitle}
+          I&apos;m <strong style={{ color: 'var(--c-white)' }}>{personalInfo.name}</strong>, a {personalInfo.role} at {personalInfo.college}. Passionate about building web apps, mastering DSA, and bringing ideas to life through code.
         </p>
 
         {/* CTAs */}

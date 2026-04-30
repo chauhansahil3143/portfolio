@@ -21,7 +21,7 @@ export default function ProjectsSection() {
       { threshold: 0.1, rootMargin: '0px 0px -60px 0px' },
     );
 
-    el.querySelectorAll('.fade-in-up').forEach((node) => observer.observe(node));
+    el.querySelectorAll('.fade-in-up, .slide-in-left, .slide-in-right, .slide-in-up').forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, []);
 
@@ -43,7 +43,11 @@ export default function ProjectsSection() {
             <article
               key={project.id}
               id={project.id}
-              className="glass-card project-card fade-in-up"
+              className={`glass-card project-card ${
+                i % 3 === 0 ? 'slide-in-left' :
+                i % 3 === 1 ? 'slide-in-up' :
+                'slide-in-right'
+              }`}
               style={{ transitionDelay: `${(i % 3) * 100}ms` }}
               role="listitem"
               aria-label={`Project: ${project.title}`}
