@@ -1122,9 +1122,9 @@ main {
   cursor: pointer;
 }
 
-.timeline-wave-node:hover .timeline-wave-icon,
-.timeline-wave-node.active .timeline-wave-icon {
-  transform: translateX(-50%) scale(1.08);
+.timeline-wave-node:hover .timeline-wave-icon {
+  transform: translateX(-50%) scale(1.12);
+  box-shadow: 0 0 35px var(--evt-color);
 }
 
 .timeline-node-img {
@@ -1147,8 +1147,7 @@ main {
   transition: all 0.4s;
 }
 
-.timeline-wave-node:hover .timeline-wave-content,
-.timeline-wave-node.active .timeline-wave-content {
+.timeline-wave-node:hover .timeline-wave-content {
   background: rgba(20, 24, 48, 0.85);
   border-color: rgba(99, 210, 255, 0.3);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);

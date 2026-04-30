@@ -22,6 +22,12 @@ export default function SkillsSection() {
               const pct = bar.dataset.pct ?? '0';
               bar.style.width = `${pct}%`;
             });
+          } else {
+            entry.target.classList.remove('visible');
+            const bars = entry.target.querySelectorAll<HTMLElement>('[data-pct]');
+            bars.forEach((bar) => {
+              bar.style.width = '0%';
+            });
           }
         });
       },

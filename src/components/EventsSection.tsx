@@ -5,7 +5,6 @@ import { eventsData } from '@/config/data';
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeEvent, setActiveEvent] = useState<string | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -16,6 +15,8 @@ export default function EventsSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
           }
         });
       },
@@ -48,21 +49,15 @@ export default function EventsSection() {
               return (
                 <div 
                   key={evt.id}
-                  className={`timeline-wave-node ${isLeft ? 'node-left slide-in-left' : 'node-right slide-in-right'} ${activeEvent === evt.id ? 'active' : ''}`}
+                  className={`timeline-wave-node ${isLeft ? 'node-left slide-in-left' : 'node-right slide-in-right'}`}
                   role="listitem"
-                  onMouseEnter={() => setActiveEvent(evt.id)}
-                  onMouseLeave={() => setActiveEvent(null)}
-                  onClick={() => setActiveEvent(activeEvent === evt.id ? null : evt.id)}
                   style={{ animationDelay: `${i * 150}ms` }}
                 >
                   
                   {/* The circular image node */}
                   <div 
                     className="timeline-wave-icon" 
-                    style={{ 
-                      borderColor: evt.color, 
-                      boxShadow: activeEvent === evt.id ? `0 0 25px ${evt.color}aa` : 'none' 
-                    }}
+                    style={{ borderColor: evt.color, '--evt-color': evt.color } as React.CSSProperties}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={evt.image} alt={evt.title} className="timeline-node-img" />
