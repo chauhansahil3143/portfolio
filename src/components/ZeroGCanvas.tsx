@@ -28,7 +28,7 @@ export default function ZeroGCanvas() {
     const hexWidth = Math.sqrt(3) * r;
     const hexHeight = 2 * r;
     const colors = ['99, 210, 255', '124, 92, 255', '0, 255, 200'];
-    const icons = ['{', '}', '</>', '0', '1', 'λ', '[]', '#', '()', '&&', '||'];
+    const icons = ['React', 'CSS', 'HTML', 'C', 'C++', 'JS', 'TS', 'Py', '{}', '</>', 'λ', 'SQL', 'Node'];
 
     let hexagons: Hexagon[] = [];
 
@@ -86,8 +86,7 @@ export default function ZeroGCanvas() {
     let animationId: number;
 
     const animate = () => {
-      ctx.fillStyle = '#02040a';
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
 
       for (let i = 0; i < hexagons.length; i++) {
         const hex = hexagons[i];
@@ -150,9 +149,9 @@ export default function ZeroGCanvas() {
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 0,
+        zIndex: -1,
         pointerEvents: 'none',
-        background: '#02040a',
+        // The background color is now handled by the global CSS theme
       }}
       aria-hidden="true"
     />

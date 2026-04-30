@@ -1,11 +1,29 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { personalInfo } from '@/config/data';
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  // Check saved or default theme
+  useEffect(() => {
+    if (document.documentElement.classList.contains('light-mode')) {
+      setIsLightMode(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !isLightMode;
+    setIsLightMode(next);
+    if (next) {
+      document.documentElement.classList.add('light-mode');
+    } else {
+      document.documentElement.classList.remove('light-mode');
+    }
+  };
 
   useEffect(() => {
     const nav = navRef.current;
@@ -66,6 +84,24 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <button 
+            onClick={toggleTheme}
+            aria-label="Toggle Theme"
+            style={{
+              background: 'transparent',
+              border: '1px solid var(--c-border)',
+              color: 'var(--c-text)',
+              padding: '0.4rem 0.8rem',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8rem',
+              marginLeft: '1rem',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            {isLightMode ? 'DARK' : 'LIGHT'}
+          </button>
         </div>
       </nav>
     </>

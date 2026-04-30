@@ -26,6 +26,28 @@
   --glass-blur:   saturate(180%) blur(20px);
   --glass-border: 1px solid rgba(99, 210, 255, 0.15);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 210, 255, 0.06);
+}
+
+.light-mode {
+  /* Colors */
+  --c-void:       #f4f6f8;
+  --c-deep:       #e2e8f0;
+  --c-surface:    #ffffff;
+  --c-border:     rgba(0, 0, 0, 0.1);
+  --c-glow:       #0070f3; /* Darker blue for visibility */
+  --c-accent:     #7c5cff;
+  --c-pulse:      #00b48c; /* Darker green */
+  --c-warn:       #ff4b4b;
+  --c-text:       #334155;
+  --c-muted:      #64748b;
+  --c-white:      #0f172a; /* Make text dark */
+
+  /* Glassmorphism */
+  --glass-bg:     rgba(255, 255, 255, 0.75);
+  --glass-bg-alt: rgba(240, 244, 248, 0.85);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+
 
   /* Spacing */
   --max-w: 1200px;
