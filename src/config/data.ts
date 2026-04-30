@@ -107,8 +107,8 @@ export const projectsData = [
     title: 'Campus Found',
     description: 'A platform designed for college students to easily report and find lost items on campus. Built to help the community recover lost belongings quickly.',
     tags: ['Web Development', 'Python', 'Frontend'],
-    github: 'https://github.com/chauhansahil3143/student-aid-search', // Link your GitHub repo here
-    demo: 'https://bvmfind.web.app/', // Add a live link here if deployed
+    github: 'https://github.com/chauhansahil3143/student-aid-search',
+    demo: 'https://bvmfind.web.app/',
     youtube: 'https://youtu.be/O5inlsb3LM0?si=SDZftv-RGr1srQYV',
     accent: '#7c5cff',
   },
