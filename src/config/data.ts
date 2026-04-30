@@ -124,3 +124,38 @@ export const projectsData = [
     accent: '#63d2ff',
   }
 ];
+
+export const eventsData = [
+  {
+    id: 'event-1',
+    title: 'Hackathon 2023',
+    date: 'Oct 15, 2023',
+    description: 'Participated in a 48-hour hackathon building an AI-powered study companion. Won 2nd place in the student category.',
+    icon: '🏆',
+    color: '#ff6b6b'
+  },
+  {
+    id: 'event-2',
+    title: 'Web Dev Workshop',
+    date: 'Jan 20, 2024',
+    description: 'Attended a hands-on workshop covering modern frontend frameworks, Next.js, and advanced CSS layout techniques.',
+    icon: '💻',
+    color: '#a78bfa'
+  },
+  {
+    id: 'event-3',
+    title: 'Tech Symposium',
+    date: 'Mar 10, 2024',
+    description: 'Tech Symposium where industry leaders discussed the future of AI, web3, and cloud computing. Networked with senior engineers.',
+    icon: '🎙️',
+    color: '#00ffc8'
+  },
+  {
+    id: 'event-4',
+    title: 'Open Source Sprint',
+    date: 'May 05, 2024',
+    description: 'Contributed to open source projects during a weekend sprint. Submitted multiple PRs fixing bugs and improving documentation.',
+    icon: '🚀',
+    color: '#63d2ff'
+  }
+];

@@ -62,11 +62,13 @@ export default function AboutSection() {
           <div className="fade-in-up" style={{ transitionDelay: '150ms' }}>
             {personalInfo.profileImage && (
               <div className="profile-img-wrapper">
-                {/* Using standard img tag to allow any external URL without Next.js domain restrictions */}
-                <img 
+                <Image 
                   src={personalInfo.profileImage} 
                   alt={`${personalInfo.name} Profile`} 
                   className="profile-img"
+                  width={400}
+                  height={400}
+                  priority
                 />
               </div>
             )}
