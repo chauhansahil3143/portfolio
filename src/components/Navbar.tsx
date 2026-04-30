@@ -98,7 +98,9 @@ export default function Navbar() {
               fontFamily: 'var(--font-mono)',
               fontSize: '0.8rem',
               marginLeft: '1rem',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              width: '70px',
+              textAlign: 'center'
             }}
           >
             {isLightMode ? 'DARK' : 'LIGHT'}

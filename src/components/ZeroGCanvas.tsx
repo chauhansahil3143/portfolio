@@ -8,7 +8,7 @@ interface Hexagon {
   cx: number;
   cy: number;
   opacity: number;
-  color: string;
+  colorIndex: number;
   icon: string;
 }
 
@@ -27,7 +27,8 @@ export default function ZeroGCanvas() {
     const r = window.innerWidth < 768 ? 20 : 35; // Hexagon radius
     const hexWidth = Math.sqrt(3) * r;
     const hexHeight = 2 * r;
-    const colors = ['99, 210, 255', '124, 92, 255', '0, 255, 200'];
+    const darkColors = ['99, 210, 255', '124, 92, 255', '0, 255, 200'];
+    const lightColors = ['0, 112, 243', '109, 40, 217', '16, 185, 129'];
     const icons = ['React', 'CSS', 'HTML', 'C', 'C++', 'JS', 'TS', 'Py', '{}', '</>', 'λ', 'SQL', 'Node'];
 
     let hexagons: Hexagon[] = [];
@@ -54,7 +55,7 @@ export default function ZeroGCanvas() {
             cx,
             cy,
             opacity: 0.02, // Base extremely dim opacity
-            color: colors[Math.floor(Math.random() * colors.length)],
+            colorIndex: Math.floor(Math.random() * 3),
             icon: icons[Math.floor(Math.random() * icons.length)]
           });
         }
@@ -63,13 +64,30 @@ export default function ZeroGCanvas() {
     initGrid();
     window.addEventListener('resize', initGrid);
 
-    // Mouse interaction
-    let mouse = { x: -1000, y: -1000 };
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+    // Data Signals (Moving lights across the grid)
+    interface Signal {
+      x: number;
+      y: number;
+      tx: number;
+      ty: number;
+      speed: number;
+      progress: number;
+    }
+    const signals: Signal[] = [];
+    const maxSignals = window.innerWidth < 768 ? 3 : 6;
+
+    const spawnSignal = () => {
+      signals.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        tx: Math.random() * width,
+        ty: Math.random() * height,
+        speed: 0.002 + Math.random() * 0.004, // Slow, elegant movement
+        progress: 0
+      });
     };
-    window.addEventListener('mousemove', handleMouseMove);
+
+    for(let i = 0; i < maxSignals; i++) spawnSignal();
 
     const drawHexagon = (cx: number, cy: number, radius: number) => {
       ctx.beginPath();
@@ -88,37 +106,60 @@ export default function ZeroGCanvas() {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
 
+      const isLight = document.documentElement.classList.contains('light-mode');
+      const activeColors = isLight ? lightColors : darkColors;
+
+      // Update moving signals
+      for (let i = signals.length - 1; i >= 0; i--) {
+        const s = signals[i];
+        s.progress += s.speed;
+        if (s.progress >= 1) {
+          signals.splice(i, 1);
+          spawnSignal();
+        }
+      }
+
       for (let i = 0; i < hexagons.length; i++) {
         const hex = hexagons[i];
 
-        // Check distance to mouse
-        const dist = Math.hypot(hex.cx - mouse.x, hex.cy - mouse.y);
-        
-        // If mouse is near, softly light up the hexagon
-        if (dist < hexWidth * 2.5) {
-          hex.opacity = 0.2 - (dist / (hexWidth * 2.5)) * 0.18; // Soft max glow of 0.2
+        // Calculate if any signal is near this hexagon
+        let targetGlow = 0;
+        for (const s of signals) {
+          const curX = s.x + (s.tx - s.x) * s.progress;
+          const curY = s.y + (s.ty - s.y) * s.progress;
+          const dist = Math.hypot(hex.cx - curX, hex.cy - curY);
+          
+          if (dist < hexWidth * 3.5) {
+            const glow = 0.2 - (dist / (hexWidth * 3.5)) * 0.18;
+            if (glow > targetGlow) targetGlow = glow;
+          }
+        }
+
+        // Apply glow or fade out
+        if (targetGlow > hex.opacity) {
+          hex.opacity = targetGlow;
         } else {
-          // Slowly fade out back to base opacity
           if (hex.opacity > 0.02) {
-            hex.opacity -= 0.005;
+            hex.opacity -= 0.003; // Smooth fade out trailing effect
           }
         }
 
         // Draw hexagon fill
         if (hex.opacity > 0) {
+          const hexColor = activeColors[hex.colorIndex];
           drawHexagon(hex.cx, hex.cy, r - 1); // r-1 creates a natural gap between hexes
-          ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 0.3})`; // Very subtle fill
+          ctx.fillStyle = `rgba(${hexColor}, ${hex.opacity * 0.3})`; // Very subtle fill
           ctx.fill();
           
           // Only draw borders and icons for ones that are actively hovered
           if (hex.opacity > 0.03) {
             // Soft border
             ctx.lineWidth = 1;
-            ctx.strokeStyle = `rgba(${hex.color}, ${hex.opacity * 1.2})`;
+            ctx.strokeStyle = `rgba(${hexColor}, ${hex.opacity * 1.2})`;
             ctx.stroke();
 
             // Draw icon inside
-            ctx.fillStyle = `rgba(${hex.color}, ${hex.opacity * 2.0})`;
+            ctx.fillStyle = `rgba(${hexColor}, ${hex.opacity * 2.0})`;
             ctx.font = `500 ${r * 0.55}px var(--font-mono)`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -133,7 +174,6 @@ export default function ZeroGCanvas() {
 
     return () => {
       window.removeEventListener('resize', initGrid);
-      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationId);
     };
   }, []);
