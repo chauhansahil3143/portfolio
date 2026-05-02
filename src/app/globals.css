@@ -420,17 +420,75 @@ main {
   background: transparent;
 }
 
-.about__grid {
+/* Desktop 2-col, mobile 1-col */
+.about__layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1fr 400px;
+  gap: 48px;
+  align-items: center; /* vertically center both columns */
+}
+
+/* Right column: stacks photo + terminal + facts */
+.about__right {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+/* Photo capped to column width */
+.about__photo-wrap {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+}
+
+.about__photo-wrap .profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.about__photo-wrap:hover .profile-img {
+  transform: scale(1.05);
+}
+
+/* Quick facts strip */
+.about__facts {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.about__fact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.about__fact-item > span {
+  font-size: 1.8rem;
+  flex-shrink: 0;
 }
 
 .about__card {
   padding: 48px;
   position: relative;
   overflow: hidden;
+  height: fit-content;
 }
 
 .about__card::before {
@@ -447,11 +505,28 @@ main {
 
 .about__heading {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 700;
   color: var(--c-white);
   margin-bottom: 20px;
   line-height: 1.2;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 900px) {
+  .about__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about__photo-wrap {
+    max-width: 280px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .about__card {
+    padding: 32px 28px;
+  }
 }
 
 .about__body {
@@ -1199,7 +1274,7 @@ main {
   height: 10px;
   background: var(--c-accent);
   border-radius: 50%;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: 99999;
   will-change: transform;
 }
@@ -1212,7 +1287,7 @@ main {
   height: 40px;
   border: 1.5px solid rgba(124, 92, 255, 0.6);
   border-radius: 50%;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: 99998;
   will-change: transform;
   transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
