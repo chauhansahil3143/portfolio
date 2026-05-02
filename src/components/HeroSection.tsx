@@ -9,7 +9,7 @@ const TYPED_SENTENCES = [
   'DSA Enthusiast 🧠',
   'Python Programmer 🐍',
   'Problem Solver 💡',
-  'CS Undergrad @ BVM 🎓',
+  'CS Undergraduate @ BVM 🎓',
 ];
 
 export default function HeroSection() {
