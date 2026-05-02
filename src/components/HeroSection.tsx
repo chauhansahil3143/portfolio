@@ -75,12 +75,12 @@ export default function HeroSection() {
       {/* Background orbs */}
       <div
         className="glow-orb"
-        style={{ width: 500, height: 500, top: '10%', left: '-10%', background: 'rgba(124,92,255,0.07)' }}
+        style={{ width: 500, height: 500, top: '10%', left: '-10%', background: 'var(--c-accent)', opacity: 0.07 }}
         aria-hidden="true"
       />
       <div
         className="glow-orb"
-        style={{ width: 350, height: 350, bottom: '10%', right: '-5%', background: 'rgba(99,210,255,0.05)' }}
+        style={{ width: 350, height: 350, bottom: '10%', right: '-5%', background: 'var(--c-glow)', opacity: 0.05 }}
         aria-hidden="true"
       />
 

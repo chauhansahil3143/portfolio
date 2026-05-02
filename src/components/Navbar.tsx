@@ -67,11 +67,11 @@ export default function Navbar() {
 
           <ul className="navbar__links" role="list">
             {[
-              { label: '// about',    id: 'about'    },
-              { label: '// projects', id: 'projects' },
-              { label: '// skills',   id: 'skills'   },
-              { label: '// events',   id: 'events'   },
-              { label: '// contact',  id: 'contact'  },
+              { label: 'about',    id: 'about'    },
+              { label: 'projects', id: 'projects' },
+              { label: 'skills',   id: 'skills'   },
+              { label: 'events',   id: 'events'   },
+              { label: 'contact',  id: 'contact'  },
             ].map(({ label, id }) => (
               <li key={id}>
                 <a
@@ -89,19 +89,18 @@ export default function Navbar() {
                 aria-label="Toggle Theme"
                 style={{
                   background: 'transparent',
-                  border: '1px solid var(--c-border)',
+                  border: 'none',
                   color: 'var(--c-text)',
-                  padding: '0.4rem 0.8rem',
-                  borderRadius: '4px',
+                  padding: '0.4rem',
                   cursor: 'pointer',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '1.2rem',
                   transition: 'all 0.3s ease',
-                  width: '70px',
-                  textAlign: 'center'
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                {isLightMode ? 'DARK' : 'LIGHT'}
+                {isLightMode ? '🌙' : '☀️'}
               </button>
             </li>
           </ul>

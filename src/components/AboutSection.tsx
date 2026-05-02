@@ -29,18 +29,29 @@ export default function AboutSection() {
   }, []);
 
   // Extract skills for the quick skill tags under bio
-  const previewSkills = skillsData.flatMap(cat => cat.skills).map(s => s.name).slice(0, 10);
+  const previewSkills = skillsData.flatMap((cat) => cat.skills).map((s) => s.name).slice(0, 10);
 
   return (
     <section className="about section" id="about" ref={sectionRef} aria-label="About me">
       <div className="container">
-        <div className="about__grid">
-          {/* Left: Bio card */}
-          <div className="glass-card about__card fade-in-up">
+        
+        {/* A robust 2-column grid that wraps gracefully on mobile */}
+        <div 
+          className="about__grid" 
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+            gap: '60px', 
+            alignItems: 'start' 
+          }}
+        >
+          
+          {/* Column 1: Bio card */}
+          <div className="glass-card about__card fade-in-up" style={{ height: 'fit-content' }}>
             {/* Glow orb inside card */}
             <div
               className="glow-orb"
-              style={{ width: 200, height: 200, top: -60, right: -40, background: 'rgba(124,92,255,0.08)' }}
+              style={{ width: 200, height: 200, top: -60, right: -40, background: 'var(--c-accent)', opacity: 0.08 }}
               aria-hidden="true"
             />
 
@@ -53,20 +64,22 @@ export default function AboutSection() {
             <p className="about__body">{personalInfo.aboutBio1}</p>
             <p className="about__body">{personalInfo.aboutBio2}</p>
 
-            <div className="skills__list" role="list" aria-label="Technical skills">
+            <div className="skills__list" role="list" aria-label="Technical skills" style={{ marginTop: '32px' }}>
               {previewSkills.map((s) => (
                 <span key={s} className="skill-tag" role="listitem">{s}</span>
               ))}
             </div>
           </div>
 
-          {/* Right: Profile Image & Terminal */}
-          <div className="fade-in-up" style={{ transitionDelay: '150ms' }}>
+          {/* Column 2: Profile Image, Terminal, Quick Facts */}
+          <div className="fade-in-up" style={{ display: 'flex', flexDirection: 'column', gap: '40px', transitionDelay: '150ms' }}>
+            
+            {/* Photo Section */}
             {personalInfo.profileImage && (
-              <div className="profile-img-wrapper">
-                <Image 
-                  src={personalInfo.profileImage} 
-                  alt={`${personalInfo.name} Profile`} 
+              <div className="profile-img-wrapper" style={{ margin: '0 auto', maxWidth: '340px', width: '100%', marginBottom: 0 }}>
+                <Image
+                  src={personalInfo.profileImage}
+                  alt={`${personalInfo.name} Profile`}
                   className="profile-img"
                   width={400}
                   height={400}
@@ -75,6 +88,7 @@ export default function AboutSection() {
               </div>
             )}
             
+            {/* Terminal */}
             <div className="terminal" role="region" aria-label="Developer profile JSON">
               <div className="terminal__header" aria-hidden="true">
                 <span className="terminal__dot" />
@@ -102,18 +116,19 @@ ${aboutTerminalData.currentlyLearning.map(item => `    <span class="t-string">"$
             {/* Quick facts */}
             <div
               className="glass-card"
-              style={{ padding: '24px 28px', marginTop: 20, display: 'flex', gap: 32, flexWrap: 'wrap' }}
+              style={{ padding: '24px', display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}
             >
               {aboutQuickFacts.map(({ icon, label, sub }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontSize: '1.4rem' }} aria-hidden="true">{icon}</span>
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '140px' }}>
+                  <span style={{ fontSize: '1.6rem' }} aria-hidden="true">{icon}</span>
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--c-white)' }}>{label}</div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)' }}>{sub}</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--c-white)' }}>{label}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)' }}>{sub}</div>
                   </div>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       </div>
