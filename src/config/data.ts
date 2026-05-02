@@ -14,7 +14,7 @@ export const personalInfo = {
   email: "sahilchauhansmc@gmail.com", // Replace with your actual email address
   phone: "+91 90235 25208",
   heroHeadingPrefix: "I BUILD THINGS", // Top part of the main heading
-  heroHeadingHighlight: "THAT MATTERS.", // Colored bottom part of the main heading
+  heroHeadingHighlight: "THAT MATTER.", // Colored bottom part of the main heading
   heroSubtitle: "I'm a 2nd-year Computer Engineering student at BVM Anand. I am passionate about technology and currently focusing on Web Development, Data Structures and Algorithms (DSA), and Python.",
   aboutHeadingPrefix: "Building at the edge of ", // Top part of the About heading
   aboutHeadingHighlight: "technology & logic.", // Colored bottom part of the About heading
