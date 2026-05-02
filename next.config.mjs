@@ -32,7 +32,11 @@ const nextConfig = {
         { key: 'X-Content-Type-Options', value: 'nosniff' },
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'X-XSS-Protection', value: '1; mode=block' },
+        // Browser: never cache HTML
         { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+        // Vercel Edge CDN: never cache HTML at the edge
+        { key: 'CDN-Cache-Control', value: 'no-store' },
+        { key: 'Vercel-CDN-Cache-Control', value: 'no-store' },
       ],
     },
   ],
