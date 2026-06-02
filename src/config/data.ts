@@ -48,7 +48,7 @@ export const aboutQuickFacts = [
 export const heroStats = [
   { value: '2nd', label: 'Year Student' },
   { value: '3+', label: 'Tech Stacks' },
-  { value: '2+', label: 'Projects Built' },
+  { value: '4+', label: 'Projects Built' },
   { value: '💯', label: 'Passion' },
 ];
 
@@ -113,15 +113,37 @@ export const projectsData = [
     accent: '#7c5cff',
   },
   {
-    id: 'proj-placeholder',
-    icon: '🚀',
-    iconBg: 'rgba(99,210,255,0.12)',
-    title: 'Add Your Next Project Here',
-    description: 'You can easily add new projects or edit existing ones by modifying the `src/config/data.ts` file. Just copy a project block and fill in your details!',
-    tags: ['Learning', 'Next.js'],
-    github: 'https://github.com',
-    demo: null,
-    accent: '#63d2ff',
+    id: 'proj-campushub',
+    icon: '🏫',
+    iconBg: 'rgba(16, 185, 129, 0.15)',
+    title: 'CampusHub',
+    description: 'Your ultimate academic command center. Access verified notes and past year questions (PYQs) uploaded by seniors, collaborate in branch-specific real-time chat rooms, and upload study materials to help your peers.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    github: 'https://github.com/chauhansahil3143/CampusHub',
+    demo: 'https://campus-hub-green-beta.vercel.app/',
+    accent: '#10b981',
+  },
+  {
+    id: 'proj-jalasai-mobile',
+    icon: '📱',
+    iconBg: 'rgba(59, 130, 246, 0.15)',
+    title: 'JalaSai Mobile',
+    description: 'A professional repair service web application for Shree Jalasai Mobile in Surat. Features display systems for phone repair categories (screens, motherboards, cameras, batteries) and easy consultation bookings for iPhone and Android devices.',
+    tags: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
+    github: 'https://github.com/chauhansahil3143/jalasai-project',
+    demo: 'https://jalasai-project.vercel.app/',
+    accent: '#3b82f6',
+  },
+  {
+    id: 'proj-bvm-chatbot',
+    icon: '💬',
+    iconBg: 'rgba(167, 139, 250, 0.15)',
+    title: 'BVM ChatBot',
+    description: 'An AI-powered academic helper for Birla Vishvakarma Mahavidyalaya engineering students. Powered by Grok AI, it features an interactive assistant for studies and college info, newcomer FAQs, lab and map finders, and image upload capabilities for parsing notice boards.',
+    tags: ['Next.js', 'Grok AI', 'Tailwind CSS', 'TypeScript'],
+    github: 'https://github.com/chauhansahil3143/chatbot',
+    demo: 'https://chatbot-six-omega-67.vercel.app/',
+    accent: '#a78bfa',
   }
 ];
 

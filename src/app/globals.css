@@ -74,6 +74,12 @@
   padding: 0;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -87,8 +93,13 @@ body {
   font-family: var(--font-sans);
   font-size: clamp(15px, 1.1vw, 17px);
   line-height: 1.7;
-  overflow-x: hidden;
   cursor: none;
+}
+
+#main-content {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* ── Selection ─────────────────────────────────────────── */
@@ -121,6 +132,8 @@ body {
 .section {
   padding-block: var(--section-py);
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* ── Utility: Glassmorphism Card ───────────────────────── */
@@ -997,6 +1010,34 @@ main {
 
   .projects__grid {
     grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .project-card {
+    width: 100%;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .skills__grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .skill-card {
+    width: 100%;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .slide-in-left,
+  .slide-in-right {
+    transform: translateY(40px);
+  }
+
+  .slide-in-left.visible,
+  .slide-in-right.visible {
+    transform: translateY(0);
   }
 
   .hero__stats {
