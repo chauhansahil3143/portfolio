@@ -59,9 +59,9 @@ export default function SkillsSection() {
           {skillsData.map((group, gi) => (
             <div
               key={group.category}
-              id={`skills-${group.category.toLowerCase().replace(/\s+/g, '-')}`}
+              id={`skills-${group.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
               className="glass-card skill-card fade-in-up"
-              style={{ transitionDelay: `${gi * 80}ms` }}
+              style={{ transitionDelay: `${gi * 80}ms`, '--cat-color': group.color } as React.CSSProperties}
               role="region"
               aria-label={`${group.category} skills`}
             >
@@ -87,7 +87,7 @@ export default function SkillsSection() {
                       }}
                     >
                       <span style={{ color: 'var(--c-text)' }}>{skill.name}</span>
-                      <span style={{ color: group.color, opacity: 0.85 }}>{skill.pct}%</span>
+                      <span style={{ color: 'var(--cat-color)', opacity: 0.85 }}>{skill.pct}%</span>
                     </div>
                     <div className="skill-bar" role="progressbar" aria-valuenow={skill.pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${skill.name} proficiency`}>
                       <div
@@ -95,7 +95,7 @@ export default function SkillsSection() {
                         data-pct={skill.pct}
                         style={{
                           width: '0%',
-                          background: `linear-gradient(90deg, ${group.color}, var(--c-glow))`,
+                          background: `linear-gradient(90deg, var(--cat-color), var(--c-glow))`,
                           transition: 'width 1.2s cubic-bezier(0.16,1,0.3,1)',
                         }}
                       />
