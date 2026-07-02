@@ -703,7 +703,9 @@ main {
   background-position: center;
   z-index: 0;
   pointer-events: none;
-  transform: scale(1.02);
+  transform: scale(1.05);
+  filter: blur(35px) brightness(0.4) saturate(0.85);
+  transition: filter 0.5s ease;
 }
 
 .showcase-bg-overlay {
@@ -890,6 +892,7 @@ main {
 
 /* Right Stack Column */
 .showcase-stack-col {
+  position: relative;
   width: 320px;
   display: flex;
   flex-direction: column;

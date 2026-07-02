@@ -22,10 +22,15 @@ export default function ProjectsSection() {
     if (stackContainerRef.current) {
       const activeChild = stackContainerRef.current.children[activeIndex] as HTMLElement;
       if (activeChild) {
-        activeChild.scrollIntoView({
+        const container = stackContainerRef.current;
+        const childLeft = activeChild.offsetLeft;
+        const childWidth = activeChild.clientWidth;
+        const containerWidth = container.clientWidth;
+        const targetScrollLeft = childLeft - (containerWidth / 2) + (childWidth / 2);
+        
+        container.scrollTo({
+          left: targetScrollLeft,
           behavior: 'smooth',
-          block: 'nearest',
-          inline: 'center',
         });
       }
     }
